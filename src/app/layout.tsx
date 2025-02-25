@@ -29,12 +29,13 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      ><div className="bg-slate-100  z-0">
         <div className="bg-white border-b-2 border-pink-600 w-full px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <Navbar/>
         </div>
-        <div className="bg-fuchsia-100 w-full px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+        <div className=" w-full px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
          {children}
+        </div>
         </div>
       </body>
     </html>

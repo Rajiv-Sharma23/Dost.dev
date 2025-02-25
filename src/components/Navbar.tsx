@@ -48,6 +48,10 @@ const Navbar = () => {
             <span>Stories</span>
           </Link>
         </div>
+        <div className="hidden xl:flex p-2 bg-pink-100 rounded-full items-center px-4">
+          <input type="text" placeholder="search..." className="bg-transparent outline-none" />
+          <Image src="/search.png" alt="search" width={14} height={14}/>
+        </div>
       </div>
       {/* right */}
       <div className=" flex items-center gap-4 xl:gap-8 justify-end ">
