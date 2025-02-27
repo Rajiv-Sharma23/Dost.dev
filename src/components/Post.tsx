@@ -4,7 +4,7 @@ import Comments from "./Comments";
 
 const Post = () => {
   return (
-    <div className="bg-pink-100 shadow-md p-4 rounded-lg">
+    <div className=" border  border-pink-600 p-4 rounded-lg">
       {/* user */}
       <div className="flex justify-between">
         <div className="flex items-center gap-4 ">

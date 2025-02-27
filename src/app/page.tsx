@@ -11,9 +11,9 @@ const HomePage = () => {
   return (
     <div className="flex">
       {/* left */}
-      <div className="hidden xl:block w-[20%]"><LeftMenu/></div>
+      <div className="hidden xl:block w-[20%]"><LeftMenu type="home"/></div>
       {/* center */}
-      <div className="w-full lg:w-[70%] xl:w-[70%]">
+      <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
           <Stories/>
           <AddPost/>
@@ -22,7 +22,7 @@ const HomePage = () => {
         </div>
       </div>
       {/* right */}
-      <div className="hidden lg:block w-[30%]"><RightMenu/></div>
+      <div className="hidden lg:block w-[30%]"><RightMenu userId=""/></div>
     </div>
   )
 }

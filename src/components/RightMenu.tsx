@@ -1,9 +1,25 @@
-import React from 'react'
+import React from "react";
+import FriendRequest from "./FriendRequest";
+import Birthdays from "./Birthdays";
+import Ad from "./Ad";
+import UserInformationCard from "./UserInformationCard";
+import UserMediaCard from "./UserMediaCard";
 
-const RightMenu = () => {
+const RightMenu = ({ userId }: { userId?: string }) => {
   return (
-    <div>RightMenu</div>
-  )
-}
+    <div className="flex flex-col gap-6 mt-2 mx-4 w-full">
+      {userId ? (
+        <>
+          <UserInformationCard userId={userId} />
+          <UserMediaCard userId={userId} />
+        </>
+      ) : null}
 
-export default RightMenu
+      <FriendRequest />
+      <Birthdays />
+      <Ad size="md" />
+    </div>
+  );
+};
+
+export default RightMenu;
