@@ -1,13 +1,27 @@
+import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import prisma from "@/lib/client";
 
-const UserMediaCard = ({ userId }: { userId: string }) => {
+const UserMediaCard = async ({ user }: { user: User }) => {
+  const postWithMedia = await prisma?.post.findMany({
+    where: {
+      userId: user.id,
+      img: {
+        not: null,
+      },
+    },
+    take: 8,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
     <div className="bg-white  flex flex-col gap-4 shadow-md p-4 rounded-lg ">
       {/* top */}
       <div className="flex justify-between">
-        <span className="font-semibold">User Info</span>
+        <span className="font-semibold">Media</span>
         <Link
           href={"/"}
           className="text-pink-600 text-xs bg-pink-200 rounded-md p-1 "
@@ -17,71 +31,14 @@ const UserMediaCard = ({ userId }: { userId: string }) => {
       </div>
       {/* Bottom */}
       <div className="flex gap-4 justify-between flex-wrap">
-        <div className="relative w-1/5 h-24">
+      { postWithMedia.length ? postWithMedia.map((post) => (<div className="relative w-1/5 h-24" key={post.id}>
           <Image
-            src="https://cdn.pixabay.com/photo/2018/04/04/01/51/girl-3288623_640.jpg"
+            src={post.img!}
             alt="avatar"
             fill
             className="object-cover rounded-md"
           />
-        </div>
-        <div className="relative w-1/5 h-24">
-          <Image
-            src="https://cdn.pixabay.com/photo/2018/04/04/01/51/girl-3288623_640.jpg"
-            alt="avatar"
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-        <div className="relative w-1/5 h-24">
-          <Image
-            src="https://cdn.pixabay.com/photo/2018/04/04/01/51/girl-3288623_640.jpg"
-            alt="avatar"
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-        <div className="relative w-1/5 h-24">
-          <Image
-            src="https://cdn.pixabay.com/photo/2018/04/04/01/51/girl-3288623_640.jpg"
-            alt="avatar"
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-        <div className="relative w-1/5 h-24">
-          <Image
-            src="https://cdn.pixabay.com/photo/2018/04/04/01/51/girl-3288623_640.jpg"
-            alt="avatar"
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-        <div className="relative w-1/5 h-24">
-          <Image
-            src="https://cdn.pixabay.com/photo/2018/04/04/01/51/girl-3288623_640.jpg"
-            alt="avatar"
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-        <div className="relative w-1/5 h-24">
-          <Image
-            src="https://cdn.pixabay.com/photo/2018/04/04/01/51/girl-3288623_640.jpg"
-            alt="avatar"
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-        <div className="relative w-1/5 h-24">
-          <Image
-            src="https://cdn.pixabay.com/photo/2018/04/04/01/51/girl-3288623_640.jpg"
-            alt="avatar"
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-        
+        </div>)): "No media Found !"}
       </div>
     </div>
   );

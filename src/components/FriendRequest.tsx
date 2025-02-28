@@ -1,8 +1,25 @@
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import FriendRequestListClient from "./FriendRequestListClient";
 
-const FriendRequest = () => {
+
+
+const FriendRequest = async () => {
+  const { userId } = await auth();
+  if (!userId) return null;
+
+  const requests = await prisma?.followRequest.findMany({
+    where: {
+      receiverId: userId,
+    },
+    include: {
+      sender: true,
+    },
+  });
+
+  if (requests?.length === 0) return null;
   return (
     <div className="bg-white  flex flex-col gap-4 shadow-md p-4 rounded-lg ">
       {/* top */}
@@ -16,63 +33,7 @@ const FriendRequest = () => {
         </Link>
       </div>
       {/* bottom */}
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <Image
-            src={
-              "https://cdn.pixabay.com/photo/2018/11/08/23/52/man-3803551_640.jpg"
-            }
-            alt="avatar"
-            width={1024}
-            height={1024}
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          <span className="text-pink-600 font-semibold">Aman Sharma</span>
-        </div>
-
-        <div className="flex items-end gap-3">
-          <Image src="/accept.png" width={20} height={20} alt="accept" />
-          <Image src="/reject.png" width={20} height={20} alt="accept" />
-        </div>
-      </div>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <Image
-            src={
-              "https://cdn.pixabay.com/photo/2018/11/08/23/52/man-3803551_640.jpg"
-            }
-            alt="avatar"
-            width={1024}
-            height={1024}
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          <span className="text-pink-600 font-semibold">Aman Sharma</span>
-        </div>
-
-        <div className="flex items-end gap-3">
-          <Image src="/accept.png" width={20} height={20} alt="accept" />
-          <Image src="/reject.png" width={20} height={20} alt="accept" />
-        </div>
-      </div>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <Image
-            src={
-              "https://cdn.pixabay.com/photo/2018/11/08/23/52/man-3803551_640.jpg"
-            }
-            alt="avatar"
-            width={1024}
-            height={1024}
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          <span className="text-pink-600 font-semibold">Aman Sharma</span>
-        </div>
-
-        <div className="flex items-end gap-3">
-          <Image src="/accept.png" width={20} height={20} alt="accept" />
-          <Image src="/reject.png" width={20} height={20} alt="accept" />
-        </div>
-      </div>
+     <FriendRequestListClient requests = {requests as any}/>
     </div>
   );
 };
